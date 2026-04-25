@@ -57,7 +57,7 @@ class SecurityService extends GetxService {
     final url = Uri.parse('package:locksy_x'); // Bu qism odatda platform-specific bo'ladi
     
     // Android sozlamalarini ochish buyrug'i
-    const MethodChannel('com.example.locksy_x/settings').invokeMethod('openAccessibility');
+    const MethodChannel('uz.locksy.security/settings').invokeMethod('openAccessibility');
   }
 
   void _initNotifications() async {

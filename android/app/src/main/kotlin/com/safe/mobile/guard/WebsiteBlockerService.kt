@@ -1,4 +1,4 @@
-package com.example.locksy_x
+package com.safe.mobile.guard
 
 import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent

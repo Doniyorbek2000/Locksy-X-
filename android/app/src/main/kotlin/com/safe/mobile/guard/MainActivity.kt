@@ -1,4 +1,4 @@
-package com.locksyx.locksy_x
+package com.safe.mobile.guard
 
 import android.content.Intent
 import android.provider.Settings
@@ -7,7 +7,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
-    private val CHANNEL = "com.example.locksy_x/settings"
+    private val CHANNEL = "uz.locksy.security/settings"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

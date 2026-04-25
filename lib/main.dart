@@ -6,6 +6,7 @@ import 'package:locksy_x/core/theme/app_theme.dart';
 import 'package:locksy_x/core/services/crypto_service.dart';
 import 'package:locksy_x/core/services/api_service.dart';
 import 'package:locksy_x/core/services/security_service.dart';
+import 'package:locksy_x/core/services/update_service.dart';
 import 'package:locksy_x/core/localization/app_translations.dart';
 import 'package:locksy_x/routes/app_pages.dart';
 import 'dart:math';
@@ -24,10 +25,14 @@ Future<void> initServices() async {
     final storage = Get.put(SecureStorageService());
     Get.put(AuthService());
     Get.put(ApiService());
-    Get.put(SecurityService()); // Xavfsizlik xizmati qo'shildi
+    Get.put(SecurityService());
+    final updateService = Get.put(UpdateService());
     
     final crypto = Get.put(CryptoService());
     await crypto.initialize();
+
+    // Yangilanishni tekshirish
+    updateService.checkForUpdates();
 
     // Auto-register user
     final api = Get.find<ApiService>();

@@ -6,8 +6,12 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // CORS ni yoqish (Flutter Web va Next.js ulanishi uchun)
-  app.enableCors();
+  // CORS ni to'liq yoqish
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   
   // Global ValidationPipe ni yoqish
   app.useGlobalPipes(new ValidationPipe({

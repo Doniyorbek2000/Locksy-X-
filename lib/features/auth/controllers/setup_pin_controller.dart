@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:locksy_x/core/services/api_service.dart';
 import 'package:locksy_x/core/services/security_service.dart';
 import 'package:locksy_x/routes/app_pages.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SetupPinController extends GetxController {
   final _storage = const FlutterSecureStorage();
-  final _apiService = ApiService();
   final _securityService = Get.find<SecurityService>();
 
   var pin = ''.obs;
@@ -59,13 +57,13 @@ class SetupPinController extends GetxController {
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.offAllNamed(AppPages.INITIAL),
+            onPressed: () => Get.offAllNamed(AppRoutes.HOME),
             child: const Text('Keyinroq'),
           ),
           ElevatedButton(
             onPressed: () {
               _securityService.openAccessibilitySettings();
-              Get.offAllNamed(AppPages.INITIAL);
+              Get.offAllNamed(AppRoutes.HOME);
             },
             child: const Text('Yoqish'),
           ),

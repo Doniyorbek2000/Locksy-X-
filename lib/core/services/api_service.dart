@@ -11,7 +11,7 @@ class ApiService {
   ApiService._internal() {
     // PRODUCTION: Render.com dagi backend manzili
     // Render'da loyiha yaratilgandan so'ng bu manzilni o'zingiznikiga almashtiring
-    String baseUrl = 'https://locksy-x-backend.onrender.com'; 
+    String baseUrl = 'https://locksy-x.onrender.com';
     
     try {
       // Debug rejimida emulyator uchun lokal backend ishlatish
@@ -158,6 +158,15 @@ class ApiService {
         'numbers': [],
         'maliciousPackages': [],
       };
+    }
+  }
+
+  Future<Map<String, dynamic>> checkUpdate() async {
+    try {
+      final response = await _dio.get('/updates/check');
+      return response.data;
+    } catch (e) {
+      return {};
     }
   }
 }

@@ -13,24 +13,31 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const API = process.env.NEXT_PUBLIC_API_URL || 'https://locksy-x.onrender.com';
+    console.log('Connecting to:', API);
     try {
       const res = await fetch(`${API}/auth/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({ password }),
       });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        localStorage.setItem('locksy_token', data.access_token);
-        router.push('/');
-      } else {
-        setError(data.message || 'Xatolik yuz berdi');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `Server xatosi: ${res.status}`);
       }
-    } catch (err) {
-      setError('Server bilan bog\'lanishda xatolik');
+
+      const data = await res.json();
+      localStorage.setItem('locksy_token', data.access_token);
+      router.push('/');
+    } catch (err: any) {
+      console.error('Login Error:', err);
+      setError(err.message === 'Failed to fetch'
+        ? 'Serverga ulanib bo\'lmadi. Internetni yoki server holatini tekshiring.'
+        : err.message);
     } finally {
       setLoading(false);
     }

@@ -12,6 +12,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { BlockedNumbersModule } from './blocked-numbers/blocked-numbers.module';
 import { StatsModule } from './stats/stats.module';
 import { AuthModule } from './auth/auth.module';
+import { UpdatesModule } from './updates/updates.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     BlockedNumbersModule,
     StatsModule,
     AuthModule,
+    UpdatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
