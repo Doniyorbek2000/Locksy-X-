@@ -9,18 +9,18 @@ class ApiService {
   late Dio _dio;
 
   ApiService._internal() {
-    // MUHIM: Real telefonda sinash uchun 'localhost' ni kompyuteringiz IP manzili bilan almashtiring.
-    // Masalan: 'http://192.168.1.10:3000'
-    // IP ni bilish uchun terminalda 'ipconfig' deb yozing.
-    String baseUrl = 'http://localhost:3000'; 
+    // PRODUCTION: Render.com dagi backend manzili
+    // Render'da loyiha yaratilgandan so'ng bu manzilni o'zingiznikiga almashtiring
+    String baseUrl = 'https://locksy-x-backend.onrender.com'; 
     
     try {
-      if (Platform.isAndroid) {
-        // Emulyator uchun 10.0.2.2 ishlaydi, lekin real telefon uchun IP kerak!
-        baseUrl = 'http://10.0.2.2:3000'; 
-      }
+      // Debug rejimida emulyator uchun lokal backend ishlatish
+      assert(() {
+        // baseUrl = 'http://10.0.2.2:3000'; 
+        return true;
+      }());
     } catch (e) {
-      // Web platforma uchun
+      // Platform xatolari uchun
     }
 
     _dio = Dio(BaseOptions(
