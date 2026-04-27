@@ -22,6 +22,9 @@ import { UpdatesModule } from './updates/updates.module';
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true, // DEV ONLY
+      ssl: process.env.DATABASE_URL?.includes('render.com') || process.env.DATABASE_URL?.includes('neon.tech')
+        ? { rejectUnauthorized: false }
+        : false,
     }),
     ThreatsModule,
     ScanModule,
