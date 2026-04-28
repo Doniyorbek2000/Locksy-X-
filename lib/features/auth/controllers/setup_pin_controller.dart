@@ -39,6 +39,7 @@ class SetupPinController extends GetxController {
   Future<void> _validateAndSave() async {
     if (pin.value == confirmPin.value) {
       await _storage.write(key: 'user_pin', value: pin.value);
+      await _storage.write(key: 'is_authenticated', value: 'true'); // Birinchi marta kirdi
       _showAccessibilityDialog();
     } else {
       errorMessage.value = 'PIN kodlar mos kelmadi';
@@ -50,22 +51,22 @@ class SetupPinController extends GetxController {
   void _showAccessibilityDialog() {
     Get.dialog(
       AlertDialog(
-        title: const Text('🛡️ Mutloq Himoya'),
+        title: const Text('Xavfsizlik Sozlamalari'),
         content: const Text(
-          'Xavfli linklarni va brauzerlarni bloklash uchun Locksy X ga ruxsat bering.\n\n'
-          'Sozlamalardan "Locksy X" ni toping va uni yoqing.',
+          'Xavfli havolalarni va virusli dasturlarni avtomatik bloklash uchun ruxsat bering.\n\n'
+          'Sozlamalardan "Locksy X" xizmatini yoqing.',
         ),
         actions: [
           TextButton(
             onPressed: () => Get.offAllNamed(AppRoutes.HOME),
-            child: const Text('Keyinroq'),
+            child: const Text('KEYINROQ'),
           ),
           ElevatedButton(
             onPressed: () {
               _securityService.openAccessibilitySettings();
               Get.offAllNamed(AppRoutes.HOME);
             },
-            child: const Text('Yoqish'),
+            child: const Text('YOQISH'),
           ),
         ],
       ),

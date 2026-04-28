@@ -22,10 +22,15 @@ class AuthController extends GetxController {
   Future<void> _checkInitialState() async {
     // Agar foydalanuvchi avval ro'yxatdan o'tmagan bo'lsa (PIN o'rnatmagan bo'lsa)
     String? pinHash = await _storageService.readData('master_pin_hash');
+    String? isAuthenticated = await _storageService.readData('is_authenticated');
+
     if (pinHash == null || pinHash.isEmpty) {
       Get.offAllNamed(AppRoutes.SETUP_PIN);
+    } else if (isAuthenticated == 'true') {
+      // Agar allaqachon bir marta kirgan bo'lsa, to'g'ridan-to'g'ri Home-ga
+      Get.offAllNamed(AppRoutes.HOME);
     } else {
-      // Biometriyani avtomatik so'rash (ixtiyoriy, lekin qulaylik uchun yaxshi)
+      // Biometriyani avtomatik so'rash
       authenticateBiometric();
     }
   }
@@ -57,6 +62,7 @@ class AuthController extends GetxController {
 
     if (digest.toString() == savedHash) {
       enteredPin.value = '';
+      await _storageService.writeData('is_authenticated', 'true');
       Get.offAllNamed(AppRoutes.HOME);
     } else {
       errorMessage.value = 'Noto\'g\'ri PIN kod';

@@ -10,23 +10,12 @@ class ApiService {
 
   ApiService._internal() {
     // PRODUCTION: Render.com dagi backend manzili
-    // Render'da loyiha yaratilgandan so'ng bu manzilni o'zingiznikiga almashtiring
     String baseUrl = 'https://locksy-x.onrender.com';
     
-    try {
-      // Debug rejimida emulyator uchun lokal backend ishlatish
-      assert(() {
-        // baseUrl = 'http://10.0.2.2:3000'; 
-        return true;
-      }());
-    } catch (e) {
-      // Platform xatolari uchun
-    }
-
     _dio = Dio(BaseOptions(
       baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
+      connectTimeout: const Duration(seconds: 30), // Vaqtni biroz uzaytirdik (Render bepul bo'lgani uchun)
+      receiveTimeout: const Duration(seconds: 30),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
