@@ -8,15 +8,14 @@ export class AuthService {
   async login(password: string) {
     try {
       // .env dagi JWT_SECRET borligini tekshirish
-      if (!process.env.JWT_SECRET) {
-        console.error('JWT_SECRET o\'rnatilmagan!');
-        throw new Error('Server sozlamalarida xatolik bor (JWT)');
-      }
+      const secret = process.env.JWT_SECRET || 'fallback_secret_for_dev';
+
+      console.log('Login attempt with password');
 
       if (password === 'adm12') {
         const payload = { username: 'admin', role: 'SUPERUSER' };
         return {
-          access_token: this.jwtService.sign(payload),
+          access_token: this.jwtService.sign(payload, { secret: secret }),
         };
       }
       throw new UnauthorizedException('Parol noto\'g\'ri!');
